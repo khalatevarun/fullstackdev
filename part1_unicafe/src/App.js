@@ -6,16 +6,9 @@ var sum = 0
 
 const Statistics = (props) => {
 
-
   return(
     <>
-    <h1>statistics</h1>
-    <p>good {props.good}</p>
-    <p>neutral {props.neutral}</p>
-    <p>bad {props.bad}</p>  
-    <p>all {props.all}</p>
-    <p>average {props.average}</p>
-    <p>positive {props.positive} %</p>
+    <p>{props.text} {props.value}</p>
     </>
   )
     
@@ -71,7 +64,19 @@ const App = () => {
   
 
 
+  if(count === 0.0){
+    return(
+      <div>
+    <h1>give feedback</h1>
+    <Button handleClick = {() => handleClicks(1) } option = "good"/>
+    <Button handleClick = {() => handleClicks(0) } option = "neutral"/>
+    <Button handleClick = {() => handleClicks(-1)} option = "bad"/>
+    <h1>statistics</h1>
+    <p>No feedback given</p>
+    </div>
+    )
 
+  }
 
 
   return (
@@ -80,7 +85,17 @@ const App = () => {
       <Button handleClick = {() => handleClicks(1) } option = "good"/>
       <Button handleClick = {() => handleClicks(0) } option = "neutral"/>
       <Button handleClick = {() => handleClicks(-1)} option = "bad"/>
-      <Statistics good = {good} neutral = {neutral} bad = {bad} all = {count} average = {average} positive = {positive}/>
+      <h1>statistics</h1>
+      <Statistics text = "good" value = {good}/>
+      <Statistics text = "neutral" value = {neutral}/>
+      <Statistics text = "bad" value = {bad}/>
+      <Statistics text = "all" value = {count}/>
+      <Statistics text = "average" value = {average}/>
+      <Statistics text = "positive" value = {positive}/>
+
+
+
+
      
      
      
