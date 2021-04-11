@@ -4,6 +4,23 @@ import React, {useState} from 'react'
 var count = 0.0
 var sum = 0
 
+const Statistics = (props) => {
+
+
+  return(
+    <>
+    <h1>statistics</h1>
+    <p>good {props.good}</p>
+    <p>neutral {props.neutral}</p>
+    <p>bad {props.bad}</p>  
+    <p>all {props.all}</p>
+    <p>average {props.average}</p>
+    <p>positive {props.positive} %</p>
+    </>
+  )
+    
+}
+
 
 const Button = (props) => {
   console.log(props)
@@ -63,12 +80,9 @@ const App = () => {
       <Button handleClick = {() => handleClicks(1) } option = "good"/>
       <Button handleClick = {() => handleClicks(0) } option = "neutral"/>
       <Button handleClick = {() => handleClicks(-1)} option = "bad"/>
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>  
-      <p>average {average}</p>
-      <p>positive {positive}</p>
+      <Statistics good = {good} neutral = {neutral} bad = {bad} all = {count} average = {average} positive = {positive}/>
+     
+     
      
       
     </div>
