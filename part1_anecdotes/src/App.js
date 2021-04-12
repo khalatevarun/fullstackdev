@@ -1,5 +1,22 @@
 import React, { useState } from 'react'
 
+const Max = (props) => {
+  const max = Math.max(...props.votes)
+  let index = props.votes.indexOf(max)
+
+  if(max===0){
+      return (
+          <p>no votes yet</p>
+      )
+  }
+  return (
+    <>
+    <h1>Anecdote with most votes</h1>
+      <p>{props.anecdotes[index]}</p>
+    </>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -11,19 +28,30 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVote] = useState(new Array(6).fill(0))
 
   const change = () => {
-    console.log("button clicked")
     var random = Math.floor(Math.random() * anecdotes.length)
     setSelected(random)
+  }
+
+  const addvote = (selected) => {
+    
+    const copy = [...votes]
+    copy[selected] += 1
+    setVote(copy)
+     
   }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <button onClick = {() => addvote(selected)}>vote</button>
       <button onClick = {change}>next anecdote</button>
+      <Max votes = {votes} anecdotes={anecdotes} />
+
     </div>
   )
 }
 
-export default App
+export default App;
