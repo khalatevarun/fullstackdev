@@ -8,7 +8,11 @@ const Statistics = (props) => {
 
   return(
     <>
-    <p>{props.text} {props.value}</p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
+   
     </>
   )
     
@@ -91,15 +95,7 @@ const App = () => {
       <Statistics text = "bad" value = {bad}/>
       <Statistics text = "all" value = {count}/>
       <Statistics text = "average" value = {average}/>
-      <Statistics text = "positive" value = {positive}/>
-
-
-
-
-     
-     
-     
-      
+      <Statistics text = "positive" value = {positive+" %" }/> 
     </div>
   )
 }
