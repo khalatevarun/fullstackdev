@@ -5,7 +5,7 @@ const App = () => {
     { name: 'Arto Hellas', number: 9881190119 }
   ]) 
   const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState(0)
+  const [ newNumber, setNewNumber ] = useState()
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
