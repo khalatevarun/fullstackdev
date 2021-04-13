@@ -2,19 +2,26 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: 9881190119 }
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState(0)
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
   }
 
+  const handleNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
+  }
+
   const addName = (event) => {
     event.preventDefault()
     const personObject = {
       name: newName,
+      number: newNumber,
       id: persons.length + 1,
     }
     const nameExists = persons.some(person => person.name === newName);
@@ -25,6 +32,7 @@ const App = () => {
     else{
   
     setPersons(persons.concat(personObject))
+    setNewNumber()
     setNewName('')
   }
 }
@@ -34,9 +42,19 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addName}>
         <div>
+        <label for="name">Name: </label>
         <input
+          id ="name"
           value={newName}
           onChange={handleNameChange}
+        />
+        </div>
+        <div>
+        <label for="number">Number: </label>
+        <input
+          id = "number"
+          value={newNumber}
+          onChange={handleNumberChange}
         />
         </div>
         <div>
@@ -46,7 +64,7 @@ const App = () => {
       <h2>Numbers</h2>
         {persons.map((person, i) => 
           <p key={i}>
-            {person.name}
+            {person.name} {person.number}
           </p>
   )}
 
