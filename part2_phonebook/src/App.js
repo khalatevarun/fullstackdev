@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: 9881190119 }
+    { name: 'Arto Hellas', number: '9881190119' }
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState()
@@ -43,9 +43,15 @@ const App = () => {
       window.alert(`${newName} is already added to phonebook`);
     }
     else{
+
+      axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        console.log(response)
+      })
   
     setPersons(persons.concat(personObject))
-    setNewNumber()
+    setNewNumber('')
     setNewName('')
   }
 }

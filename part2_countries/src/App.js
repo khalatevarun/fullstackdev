@@ -75,6 +75,7 @@ const Result = ({results, query, handleBtn, weather}) => {
 
 
 const App = () => {
+  
   // state handlers
   const [ data, setData ] = useState([])
   const [ query, setQuery ] = useState("")
