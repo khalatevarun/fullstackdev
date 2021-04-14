@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -6,6 +7,18 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState()
+
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+  console.log('render', persons.length, 'persons')
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -42,7 +55,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addName}>
         <div>
-        <label for="name">Name: </label>
+        <label htmlFor="name">Name: </label>
         <input
           id ="name"
           value={newName}
@@ -50,7 +63,7 @@ const App = () => {
         />
         </div>
         <div>
-        <label for="number">Number: </label>
+        <label htmlFor="number">Number: </label>
         <input
           id = "number"
           value={newNumber}
