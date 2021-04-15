@@ -6,7 +6,7 @@ const App = () => {
     { name: '', number: '', id:0 }
   ]) 
   const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState()
+  const [ newNumber, setNewNumber ] = useState('')
 
 
   useEffect(() => {
@@ -40,7 +40,17 @@ const App = () => {
     const nameExists = persons.some(person => person.name === newName);
     console.log(nameExists)
     if(nameExists){
-      window.alert(`${newName} is already added to phonebook`);
+      if(window.confirm(newName+" is already added to phonebook, replace the old number with a new one?")){
+        const existingPerson = persons.find(p => p.name === newName)
+        const changedNumber = {...existingPerson, number: newNumber}
+        const url = `http://localhost:3001/persons/${changedNumber.id}`
+        axios.put(url,changedNumber) 
+        .then(response => {
+          console.log(response)
+          setPersons(persons.map(person => person.id !== changedNumber.id ? person : response.data))
+        })
+
+      }
     }
     else{
 
@@ -63,6 +73,7 @@ const deleteName = (event) => {
     const id = event.target.value
   axios.delete("http://localhost:3001/persons/"+id).then(response => {
     console.log(response)
+    
 
 
   });
