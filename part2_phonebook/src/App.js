@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '9881190119' }
+    { name: '', number: '', id:0 }
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState()
@@ -56,6 +56,20 @@ const App = () => {
   }
 }
 
+const deleteName = (event) => {
+  event.preventDefault()
+  const name = persons[event.target.value - 1].name
+  if (window.confirm("Delete "+name+" ?")) {
+    const id = event.target.value
+  axios.delete("http://localhost:3001/persons/"+id).then(response => {
+    console.log(response)
+
+
+  });
+   
+  }
+}
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -82,9 +96,11 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
         {persons.map((person, i) => 
-          <p key={i}>
-            {person.name} {person.number}
-          </p>
+          <div key={i}>
+            {person.name} {person.number} 
+            <button value= {person.id} onClick={deleteName}>delete</button>
+          </div>
+         
   )}
 
     </div>
