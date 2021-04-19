@@ -1,19 +1,9 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "9881190110",
-      "id": 1
-    },
-    {
       "name": "Mary Poppendieck",
       "number": "9881190110",
       "id": 4
-    },
-    {
-      "name": "Varun Khalate",
-      "number": "9689931884",
-      "id": 5
     }
   ]
 }

@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from "react";
 import personService from "./services/persons";
+import "./index.css";
+
+const SM = ({ successfulMessage }) => {
+  if (successfulMessage === null) {
+    return null;
+  }
+
+  return <div className="successful">{successfulMessage}</div>;
+};
+const EM = ({ errorMessage }) => {
+  if (errorMessage === null) {
+    return null;
+  }
+
+  return <div className="error">{errorMessage}</div>;
+};
 
 const App = () => {
   const [persons, setPersons] = useState([{ name: "", number: "", id: 0 }]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [successfulMessage, setsuccessfulMessage] = useState(null);
+  const [errorMessage, seterrorMessage] = useState(null);
 
   useEffect(() => {
     console.log("effect");
-    personService
-    .getAll()
-    .then(initialPersons => {
+    personService.getAll().then((initialPersons) => {
       console.log("promise fulfilled");
       setPersons(initialPersons);
     });
@@ -48,25 +64,43 @@ const App = () => {
         const changedNumber = { ...existingPerson, number: newNumber };
         personService
           .update(changedNumber.id, changedNumber)
-          .then(returnedPerons => {
+          .then((returnedPerons) => {
             console.log(returnedPerons);
             setPersons(
               persons.map((person) =>
                 person.id !== changedNumber.id ? person : returnedPerons
               )
             );
+            setsuccessfulMessage(
+              changedNumber.name + "'s number has been updated."
+            );
+            setTimeout(() => {
+              setsuccessfulMessage(null);
+            }, 5000);
+
             setNewNumber("");
             setNewName("");
+          })
+          .catch((error) => {
+            seterrorMessage(
+              `'${changedNumber.name}' was already removed from server`
+            );
+            setTimeout(() => {
+              seterrorMessage(null);
+            }, 5000);
+            setPersons(persons.filter((p) => p.id !== changedNumber.id));
           });
       }
     } else {
-      personService
-      .create(personObject)
-      .then(returnedPerons => {
+      personService.create(personObject).then((returnedPerons) => {
         console.log(returnedPerons);
       });
 
       setPersons(persons.concat(personObject));
+      setsuccessfulMessage(personObject.name + " has been added");
+      setTimeout(() => {
+        setsuccessfulMessage(null);
+      }, 5000);
       setNewNumber("");
       setNewName("");
     }
@@ -77,18 +111,24 @@ const App = () => {
 
     if (window.confirm("Delete " + event.target.name + " ?")) {
       const id = event.target.value;
-      personService
-      .deleteName(id)
-      .then(() => {
+      personService.deleteName(id).then(() => {
         setPersons(persons.filter((p) => p.name !== event.target.name));
         console.log("this is inside deleteName event  handler", persons);
       });
+      setsuccessfulMessage(
+        event.target.name + " has been deleted from the records"
+      );
+      setTimeout(() => {
+        setsuccessfulMessage(null);
+      }, 5000);
     }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <SM successfulMessage={successfulMessage} />
+      <EM errorMessage={errorMessage} />
       <form onSubmit={addName}>
         <div>
           <label htmlFor="name">Name: </label>
